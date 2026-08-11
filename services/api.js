@@ -1,6 +1,11 @@
 import axios from "axios";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL || "http://localhost:8000/api";
+let API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL || "http://localhost:8000/api";
+
+// Safeguard: Ensure the API URL ends with /api
+if (API_BASE_URL && !API_BASE_URL.endsWith("/api") && !API_BASE_URL.endsWith("/api/")) {
+  API_BASE_URL = API_BASE_URL.replace(/\/+$/, "") + "/api";
+}
 
 const api = axios.create({
   baseURL: API_BASE_URL,

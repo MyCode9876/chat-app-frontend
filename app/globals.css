@@ -1,0 +1,1330 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #000000;
+  color: #f3f4f6;
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Global reset to prevent default browser focus outlines */
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom Scrollbars for Message Logs */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 99px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* --- LIGHT THEME OVERRIDES --- */
+.light {
+  color-scheme: light;
+}
+
+.light body {
+  background-color: #f0f2f5;
+  color: #111b21;
+}
+
+/* Force status viewer header text & icons to be white in all theme modes */
+.status-viewer-header,
+.status-viewer-header *,
+.status-viewer-header p,
+html.light .status-viewer-header,
+html.light .status-viewer-header *,
+html.light .status-viewer-header p,
+.light .status-viewer-header,
+.light .status-viewer-header *,
+.light .status-viewer-header p {
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+}
+
+/* Scrollbar in Light Theme */
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.18);
+}
+
+/* Layout elements override */
+.light .bg-\[\#0f0e15\] {
+  background-color: #f0f2f5 !important;
+}
+
+.light .bg-\[\#0f0e15\]\/95 {
+  background-color: rgba(240, 242, 245, 0.95) !important;
+}
+
+.light .bg-\[\#161421\] {
+  background-color: #eae6f3 !important;
+  /* Sidebar thin drawer */
+}
+
+.light .bg-\[\#161421\]\/95 {
+  background-color: #ffffff !important;
+  /* Sidebar list drawer */
+}
+
+.light .bg-\[\#161421\]\/50 {
+  background-color: #f6f5fa !important;
+  /* Sidebar header */
+}
+
+.light .bg-\[\#161421\]\/60 {
+  background-color: #f0f2f5 !important;
+  /* Chat header and footer */
+}
+
+.light .bg-\[\#0a0a0f\] {
+  background-color: #efeae2 !important;
+  /* WhatsApp light chat wallpaper! */
+  background-image: radial-gradient(rgba(124, 93, 250, 0.03) 1px, transparent 0) !important;
+  background-size: 24px 24px !important;
+}
+
+.light .bg-\[\#1a1829\]\/40 {
+  background-color: rgba(124, 93, 250, 0.05) !important;
+}
+
+.light .border-white\/5 {
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+.light .divide-white\/\[0\.02\]>* {
+  border-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.light .border-white\/\[0\.08\] {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Sidebar Search inputs */
+.light .bg-\[\#1c1a29\] {
+  background-color: #f0f2f5 !important;
+}
+
+.light .bg-\[\#1c1a29\]\/60 {
+  background-color: #f0f2f5 !important;
+}
+
+.light .placeholder\:text-white\/20::placeholder {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
+/* Chat bubble overrides */
+.light .bg-\[\#2a2740\] {
+  background-color: #ffffff !important;
+  color: #111b21 !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.light .bg-\[\#7c5dfa\]:not(.has-custom-theme) {
+  background-color: #7c5dfa !important;
+  /* Keep purple send bubble */
+  color: #ffffff !important;
+}
+
+/* Modals */
+.light .bg-\[\#201d2d\] {
+  background-color: #ffffff !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light .bg-\[\#161421\]\/30 {
+  background-color: #f9f9fb !important;
+}
+
+.light .bg-\[\#28253b\] {
+  background-color: #f0f2f5 !important;
+  color: #111b21 !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+.light .bg-\[\#2c283d\] {
+  background-color: #e5e0fb !important;
+}
+
+.light .bg-\[\#27243c\] {
+  background-color: #eae6f5 !important;
+}
+
+.light .bg-\[\#1f1d2c\] {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Text overrides */
+.light .text-white {
+  color: #111b21 !important;
+}
+
+.light .text-white\/95 {
+  color: #111b21 !important;
+}
+
+.light .text-white\/85 {
+  color: #1c2730 !important;
+}
+
+.light .text-white\/80 {
+  color: #1c2730 !important;
+}
+
+.light .text-white\/70 {
+  color: #3b4a54 !important;
+}
+
+.light .text-white\/60 {
+  color: #54656f !important;
+}
+
+.light .text-white\/50 {
+  color: #54656f !important;
+}
+
+.light .text-white\/45 {
+  color: #667781 !important;
+}
+
+.light .text-white\/40 {
+  color: #667781 !important;
+}
+
+.light .text-white\/35 {
+  color: #8696a0 !important;
+}
+
+.light .text-white\/30 {
+  color: #8696a0 !important;
+}
+
+.light .text-white\/20 {
+  color: #a6b4be !important;
+}
+
+/* Hover effects */
+.light .hover\:bg-white\/5:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.light .hover\:bg-\[\#201e30\]:hover {
+  background-color: #f0f2f5 !important;
+}
+
+.light .hover\:bg-white\/\[0\.01\]:hover {
+  background-color: rgba(0, 0, 0, 0.01) !important;
+}
+
+.light .bg-\[\#7c5dfa\]\/15 {
+  background-color: rgba(124, 93, 250, 0.08) !important;
+}
+
+.light .bg-\[\#7c5dfa\]\/20 {
+  background-color: rgba(124, 93, 250, 0.12) !important;
+}
+
+.light .hover\:bg-\[\#7c5dfa\]\/20:hover {
+  background-color: rgba(124, 93, 250, 0.15) !important;
+}
+
+/* Input boxes in chat */
+.light .bg-\[\#201e2e\] {
+  background-color: #ffffff !important;
+  color: #111b21 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Status builder preview color overlays (dont override bg colors in status editor) */
+.light .bg-\[var\(--status-bg\)\] {
+  background-color: var(--status-bg) !important;
+}
+
+/* Welcome screen drawing fixes */
+.light .welcome-check-circle {
+  fill: #7c5dfa !important;
+}
+
+.light .bg-slateDark {
+  background-color: #e5e7eb !important;
+}
+
+.light .text-slate-500 {
+  color: #667781 !important;
+}
+
+/* --- Font Size scaling --- */
+html.font-size-small {
+  font-size: 13px !important;
+}
+
+html.font-size-medium {
+  font-size: 15px !important;
+}
+
+html.font-size-large {
+  font-size: 17px !important;
+}
+
+/* --- EXTRA LIGHT THEME COLOR CORRECTIONS --- */
+.light body {
+  background-color: #f0f2f5 !important;
+  color: #111b21 !important;
+}
+
+.light .h-screen {
+  background-color: #f0f2f5 !important;
+}
+
+.light .bg-\[\#1d1b26\]\/90,
+.light .bg-\[\#1d1b26\] {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #111b21 !important;
+}
+
+.light .bg-\[\#07060b\] {
+  background-color: #f0f2f5 !important;
+}
+
+.light .bg-\[\#0c0b12\]\/60 {
+  background-color: #ffffff !important;
+  border-bottom-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light .bg-\[\#1f1c2d\]\/80 {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light .bg-\[\#2a2836\] {
+  background-color: #f0f2f5 !important;
+  color: #111b21 !important;
+}
+
+.light .bg-\[\#161421\] {
+  background-color: #ffffff !important;
+}
+
+.light .bg-\[\#161421\]\/60 {
+  background-color: #f0f2f5 !important;
+}
+
+.light .bg-\[\#161421\]\/50 {
+  background-color: #ffffff !important;
+}
+
+.light .bg-\[\#161421\]\/30 {
+  background-color: #f9f9fb !important;
+}
+
+.light .bg-\[\#1c1a29\]\/90 {
+  background-color: #eae6f3 !important;
+  color: #7c5dfa !important;
+}
+
+.light .bg-\[\#1c1a29\]\/40,
+.light .bg-\[\#1c1a29\]\/20 {
+  background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+.light .bg-\[\#28253b\] {
+  background-color: #f0f2f5 !important;
+  color: #111b21 !important;
+}
+
+.light .bg-\[\#2c283d\] {
+  background-color: #eae6f5 !important;
+}
+
+.light .bg-\[\#27243c\] {
+  background-color: #eae6f5 !important;
+}
+
+.light .bg-\[\#1f1d2c\] {
+  background-color: #ffffff !important;
+}
+
+.light .bg-\[\#201d2d\] {
+  background-color: #ffffff !important;
+}
+
+.light .bg-black\/75 {
+  background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.light .text-white\/95,
+.light .text-white\/90,
+.light .text-white\/85,
+.light .text-white\/80,
+.light .text-white\/70,
+.light .text-white {
+  color: #111b21 !important;
+}
+
+.light .text-white\/60,
+.light .text-white\/50,
+.light .text-white\/45,
+.light .text-white\/40 {
+  color: #54656f !important;
+}
+
+.light .text-white\/35,
+.light .text-white\/30,
+.light .text-white\/20 {
+  color: #8696a0 !important;
+}
+
+/* Custom Trash Lid Animation */
+@keyframes trash-lid-open-close {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  35% {
+    transform: translateY(-4px) rotate(-30deg);
+  }
+
+  70% {
+    transform: translateY(-4px) rotate(-30deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+.animate-trash-lid {
+  animation: trash-lid-open-close 1.2s infinite ease-in-out;
+  transform-origin: 3px 6px;
+}
+
+/* Confirm Dialog container theme styling */
+.confirm-dialog-container {
+  background-color: #1f1d2c !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.light .confirm-dialog-container {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+.light .confirm-dialog-title {
+  color: #111b21 !important;
+}
+
+.light .confirm-dialog-desc {
+  color: #54656f !important;
+}
+
+/* Translucent container color overrides under light mode */
+.light .bg-white\/\[0\.02\] {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+}
+
+.light .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light .bg-white\/20 {
+  background-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+.light .text-\[\#9f85ff\] {
+  color: #7c5dfa !important;
+}
+
+.light .text-\[\#c0b3ff\] {
+  color: #684ce2 !important;
+}
+
+.light .bg-\[\#1a1826\] {
+  background-color: #ffffff !important;
+  color: #111b21 !important;
+}
+
+.light .bg-\[\#1f1d2c\]\/95,
+.light .bg-\[\#1f1d2c\]\/90,
+.light .bg-\[\#1f1d2c\]\/80,
+.light .bg-\[\#1f1d2c\]\/60 {
+  background-color: #ffffff !important;
+  color: #111b21 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light .bg-\[\#1f1d2c\]\/95 button,
+.light .bg-\[\#1f1d2c\]\/95 span,
+.light .bg-\[\#1f1d2c\]\/90 button,
+.light .bg-\[\#1f1d2c\]\/90 span,
+.light .bg-\[\#1f1d2c\]\/80 button,
+.light .bg-\[\#1f1d2c\]\/80 span,
+.light .bg-\[\#1f1d2c\]\/60 button,
+.light .bg-\[\#1f1d2c\]\/60 span,
+.light .bg-\[\#1f1d2c\] button,
+.light .bg-\[\#1f1d2c\] span {
+  color: #111b21 !important;
+}
+
+.light .bg-\[\#1f1d2c\]\/95 button:hover,
+.light .bg-\[\#1f1d2c\]\/90 button:hover,
+.light .bg-\[\#1f1d2c\]\/80 button:hover,
+.light .bg-\[\#1f1d2c\]\/60 button:hover,
+.light .bg-\[\#1f1d2c\] button:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.light .bg-\[\#7c5dfa\] .text-white,
+.light .bg-\[\#7c5dfa\].text-white,
+.light .bg-\[\#7c5dfa\]\/95 .text-white,
+.light .bg-\[\#7c5dfa\]\/95.text-white,
+.light .bg-\[\#7c5dfa\]\/90 .text-white,
+.light .bg-\[\#7c5dfa\]\/90.text-white,
+.light .bg-\[\#7c5dfa\]\/80 .text-white,
+.light .bg-\[\#7c5dfa\]\/80.text-white,
+.light .bg-\[\#684ce2\] .text-white,
+.light .bg-\[\#684ce2\].text-white,
+.light .bg-emerald-500 .text-white,
+.light .bg-emerald-500.text-white,
+.light .bg-emerald-600 .text-white,
+.light .bg-emerald-600.text-white,
+.light .bg-red-500 .text-white,
+.light .bg-red-500.text-white,
+.light .bg-red-600 .text-white,
+.light .bg-red-600.text-white,
+.light button.bg-\[\#7c5dfa\],
+.light button.bg-\[\#684ce2\],
+.light button.bg-emerald-500,
+.light button.bg-red-500,
+.light button.bg-red-600,
+.light .bg-\[\#7c5dfa\] span,
+.light .bg-\[\#7c5dfa\] h3,
+.light .bg-\[\#7c5dfa\] h4,
+.light .bg-\[\#7c5dfa\] p,
+.light .bg-\[\#7c5dfa\] div,
+.light .bg-\[\#7c5dfa\] svg,
+.light button.bg-\[\#7c5dfa\] *,
+.light button.bg-\[\#684ce2\] *,
+.light button.bg-emerald-500 *,
+.light button.bg-red-500 *,
+.light button.bg-red-600 * {
+  color: #ffffff !important;
+}
+
+.light .force-text-white,
+.light .force-text-white * {
+  color: #ffffff !important;
+}
+
+.light .force-text-black {
+  color: #111b21 !important;
+}
+
+.w-4.h-4.rounded.border,
+.w-3\.5.h-3\.5.rounded.border {
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}
+
+.light .w-4.h-4.rounded.border,
+.light .w-3\.5.h-3\.5.rounded.border {
+  border-color: rgba(0, 0, 0, 0.22) !important;
+}
+
+.light .border-white\/10 {
+  border-color: #cbd5e1 !important;
+}
+
+.light .border-white\/20 {
+  border-color: #94a3b8 !important;
+}
+
+.light .border-white\/40 {
+  border-color: #64748b !important;
+}
+
+.light .bg-\[\#7c5dfa\]\/95,
+.light .bg-\[\#7c5dfa\]\/95 *,
+html.light .bg-\[\#7c5dfa\]\/95,
+html.light .bg-\[\#7c5dfa\]\/95 span,
+html.light .bg-\[\#7c5dfa\]\/95 div {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Light mode Alert card background overrides */
+.light .bg-red-950\/20 {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important;
+  border-color: #fca5a5 !important;
+}
+
+.light .bg-red-950\/20 * {
+  color: #991b1b !important;
+}
+
+.light .bg-red-950\/40 {
+  background-color: #fee2e2 !important;
+  color: #991b1b !important;
+  border-color: #fca5a5 !important;
+}
+
+.light .bg-red-950\/40 * {
+  color: #991b1b !important;
+}
+
+.light .bg-emerald-950\/40 {
+  background-color: #d1fae5 !important;
+  color: #065f46 !important;
+  border-color: #6ee7b7 !important;
+}
+
+.light .bg-emerald-950\/40 * {
+  color: #065f46 !important;
+}
+
+/* Light mode Notification Card backgrounds */
+.light .bg-white\/\[0\.01\] {
+  background-color: #f9f9fb !important;
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+.light .border-white\/5 {
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Distinct light grey background with borders for inputs in light theme */
+.light input.border-transparent,
+.light textarea.border-transparent {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-color: #f0f2f5 !important;
+}
+
+/* Immersive status viewer dark mode overrides */
+.light .status-viewer-dark {
+  color-scheme: dark !important;
+}
+
+.light .status-viewer-dark,
+.light .status-viewer-dark * {
+  color: #ffffff !important;
+}
+
+.light .status-viewer-dark .bg-black {
+  background-color: #000000 !important;
+}
+
+.light .status-viewer-dark .bg-\[\#0f0e15\] {
+  background-color: #0f0e15 !important;
+}
+
+.light .status-viewer-dark .text-white\/40 {
+  color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.light .status-viewer-dark .text-white\/50 {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.light .status-viewer-dark .text-white\/60 {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.light .status-viewer-dark .text-white\/80 {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.light .status-viewer-dark .text-white\/90 {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.light .status-viewer-dark .border-white\/5 {
+  border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.light .status-viewer-dark .bg-white\/5 {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.light .status-viewer-dark .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.light .status-viewer-dark .bg-white\/20 {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.light .status-viewer-dark .bg-white {
+  background-color: #ffffff !important;
+}
+
+/* Light mode user avatar outline border corrections */
+.light .border-\[\#161421\] {
+  border-color: #ffffff !important;
+}
+
+/* Soft light purple background for fallback avatar circles with dark text */
+.light .bg-\[\#27233a\] {
+  background-color: #eae6f5 !important;
+  color: #7c5dfa !important;
+}
+
+.light .bg-\[\#27233a\] span,
+.light .bg-\[\#27233a\] p,
+.light .bg-\[\#27233a\] div {
+  color: #7c5dfa !important;
+}
+
+/* Sleek Laptop/Phone SVG illustration overrides under light theme */
+.light .bg-\[\#0a0a0f\] svg [fill="#1b192b"] {
+  fill: #ffffff !important;
+}
+
+.light .bg-\[\#0a0a0f\] svg [fill="#24213d"] {
+  fill: #f0f2f5 !important;
+}
+
+.light .bg-\[\#0a0a0f\] svg [fill="#131122"] {
+  fill: #cbd5e1 !important;
+}
+
+.light .bg-\[\#0a0a0f\] svg [fill="#0d0c15"] {
+  fill: #ffffff !important;
+}
+
+/* Light mode floating status pen button overrides */
+.light .bg-\[\#2a2640\] {
+  background-color: #ffffff !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light .bg-\[\#2a2640\]:hover {
+  background-color: #f0f2f5 !important;
+}
+
+.light .bg-\[\#2a2640\] svg {
+  color: #7c5dfa !important;
+}
+
+/* Fix text colors for status viewer list and modal in light mode */
+.light .status-viewer-dark .bg-white,
+.light .status-viewer-dark .bg-white * {
+  color: #111b21 !important;
+}
+
+.light .status-viewer-dark .bg-white .text-gray-400 {
+  color: #64748b !important;
+}
+
+.light .status-viewer-dark .bg-\[\#1f1d2c\],
+.light .status-viewer-dark .bg-\[\#1f1d2c\] * {
+  color: #111b21 !important;
+}
+
+.light .status-viewer-dark .bg-\[\#1f1d2c\] .text-white\/50 {
+  color: #64748b !important;
+}
+
+/* Red selection delete action bar background and text colors in light mode */
+.light .bg-red-950\/15 {
+  background-color: #fee2e2 !important;
+  color: #b91c1c !important;
+  border-bottom: 1px solid rgba(185, 28, 28, 0.15) !important;
+}
+
+.light .bg-red-950\/15 span,
+.light .bg-red-950\/15 .text-red-200 {
+  color: #b91c1c !important;
+}
+
+/* seen tick override in light mode */
+.light .bg-\[\#7c5dfa\] svg.seen-tick {
+  color: #53bdeb !important;
+}
+
+/* Starred messages */
+.starred-star {
+  color: #fbbf24 !important;
+  /* amber-400 */
+}
+
+/* Emoji Reaction Panel floating container */
+.emoji-reaction-bar {
+  background-color: #1f1d2c !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 9999px;
+}
+
+.light .emoji-reaction-bar {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Emoji Reaction Pill styling at bottom corner of message bubble */
+.reaction-pills-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  /* increased spacing between pills */
+  position: absolute;
+  bottom: -20px;
+  /* slight gap below bubble */
+  right: -13px;
+  /* shift right to avoid edge overlap */
+  z-index: 1;
+}
+
+/* Theme-Aware Modals & Dialogs */
+.custom-modal-box {
+  background-color: rgba(32, 29, 45, 0.95) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+.light .custom-modal-box {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: #111b21 !important;
+}
+
+.custom-modal-box h3,
+.custom-modal-box h4 {
+  color: currentColor !important;
+}
+
+.custom-modal-box p {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.light .custom-modal-box p {
+  color: rgba(17, 27, 33, 0.6) !important;
+}
+
+/* Theme-Aware Inputs inside Modals */
+.modal-search-input {
+  background-color: #1c1a29 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+.modal-search-input::placeholder {
+  color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.light .modal-search-input {
+  background-color: #f0f2f5 !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: #111b21 !important;
+}
+
+.light .modal-search-input::placeholder {
+  color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Theme-Aware Cancel Button inside Modals */
+.modal-cancel-btn {
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.modal-cancel-btn:hover {
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.light .modal-cancel-btn {
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  background-color: rgba(0, 0, 0, 0.03) !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.light .modal-cancel-btn:hover {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  background-color: rgba(0, 0, 0, 0.06) !important;
+  color: #111b21 !important;
+}
+
+/* Theme-Aware List Items inside Modals */
+.modal-chat-item {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.modal-chat-item:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.light .modal-chat-item {
+  color: rgba(17, 27, 33, 0.8) !important;
+}
+
+.light .modal-chat-item:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.reaction-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background-color: #242235;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 2px 6px;
+  border-radius: 9999px;
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.reaction-pill:hover {
+  background-color: #2e2b44;
+}
+
+.light .reaction-pill {
+  background-color: #f0f2f5;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #111b21;
+}
+
+.light .reaction-pill:hover {
+  background-color: #e4e6eb;
+}
+
+.reaction-pill.my-reaction {
+  background-color: rgba(124, 93, 250, 0.2);
+  border-color: rgba(124, 93, 250, 0.4);
+}
+
+.light .reaction-pill.my-reaction {
+  background-color: rgba(124, 93, 250, 0.12);
+  border-color: rgba(124, 93, 250, 0.3);
+}
+
+.light .poll-header-force-white {
+  color: #ffffff !important;
+}
+
+.light .poll-header-force-white svg {
+  color: #ffffff !important;
+}
+
+
+/* Scroll-to Reply Target Flashing */
+@keyframes highlight-flash {
+  0% {
+    background-color: rgba(124, 93, 250, 0.35);
+    box-shadow: 0 0 16px rgba(124, 93, 250, 0.4);
+  }
+
+  30% {
+    background-color: rgba(124, 93, 250, 0.35);
+    box-shadow: 0 0 16px rgba(124, 93, 250, 0.4);
+  }
+
+  100% {
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.highlight-flash {
+  animation: highlight-flash 1.6s cubic-bezier(0.25, 1, 0.5, 1) forwards !important;
+}
+
+/* Chat wallpaper active - let React inline styles control background completely */
+/* IMPORTANT: Do NOT add !important here - React inline styles are overridden by CSS !important */
+.chat-wallpaper-active {
+  /* Empty - inline style handles everything */
+}
+
+.light .chat-wallpaper-active {
+  /* Empty - inline style handles everything */
+}
+
+.settings-select-dropdown {
+  appearance: none;
+  background-color: #201d2d !important;
+  color: #9f85ff !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+  padding: 5px 28px 5px 10px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239f85ff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 7px center !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+
+.light .force-white-text,
+.force-white-text {
+  color: #ffffff !important;
+}
+
+.settings-select-dropdown:hover {
+  border-color: rgba(124, 93, 250, 0.4) !important;
+  box-shadow: 0 2px 12px rgba(124, 93, 250, 0.15) !important;
+}
+
+.light .settings-select-dropdown {
+  background-color: #f0f2f5 !important;
+  color: #7c5dfa !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237c5dfa' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+}
+
+.light .settings-theme-btn {
+  color: #111b21 !important;
+}
+
+.light .settings-theme-btn.theme-btn-active {
+  color: #7c5dfa !important;
+  background-color: rgba(124, 93, 250, 0.08) !important;
+  border-color: #7c5dfa !important;
+}
+
+.light .settings-theme-btn:not(.theme-btn-active) {
+  color: #54656f !important;
+}
+
+.custom-select-btn {
+  background-color: #201d2d !important;
+  color: #9f85ff !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.custom-select-btn:hover {
+  border-color: rgba(124, 93, 250, 0.45) !important;
+  box-shadow: 0 4px 12px rgba(124, 93, 250, 0.15) !important;
+  transform: translateY(-0.5px);
+}
+
+.light .custom-select-btn {
+  background-color: #f6f5fa !important;
+  color: #7c5dfa !important;
+  border: 1px solid rgba(124, 93, 250, 0.12) !important;
+}
+
+.light .custom-select-btn:hover {
+  background-color: #eae6f5 !important;
+  border-color: rgba(124, 93, 250, 0.3) !important;
+  box-shadow: 0 4px 12px rgba(124, 93, 250, 0.08) !important;
+}
+
+.custom-select-panel {
+  background-color: #1f1d2c !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+.light .custom-select-panel {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 10px 30px rgba(124, 93, 250, 0.08) !important;
+}
+
+.custom-select-option {
+  color: rgba(255, 255, 255, 0.6) !important;
+  transition: all 0.15s ease !important;
+}
+
+.custom-select-option:hover {
+  background-color: rgba(255, 255, 255, 0.04) !important;
+  color: #ffffff !important;
+}
+
+.light .custom-select-option {
+  color: #54656f !important;
+}
+
+.light .custom-select-option:hover {
+  background-color: rgba(124, 93, 250, 0.04) !important;
+  color: #111b21 !important;
+}
+
+.custom-select-option.bg-\[\#7c5dfa\]\/20 {
+  background-color: rgba(124, 93, 250, 0.2) !important;
+  color: #b69eff !important;
+}
+
+.light .custom-select-option.bg-\[\#7c5dfa\]\/20 {
+  background-color: rgba(124, 93, 250, 0.08) !important;
+  color: #7c5dfa !important;
+}
+
+/* Custom Thin Scrollbar for Select Dropdowns */
+.custom-scrollbar {
+  scrollbar-width: thin !important;
+  scrollbar-color: rgba(124, 93, 250, 0.25) transparent !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px !important;
+  height: 4px !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(124, 93, 250, 0.25) !important;
+  border-radius: 10px !important;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 93, 250, 0.45) !important;
+}
+
+.light .custom-scrollbar {
+  scrollbar-color: rgba(124, 93, 250, 0.15) transparent !important;
+}
+
+.light .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(124, 93, 250, 0.15) !important;
+}
+
+.light .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(124, 93, 250, 0.3) !important;
+}
+
+/* ULTRA HIGH SPECIFICITY OVERRIDE FOR STATUS VIEWER & SENT MESSAGE BUBBLES */
+html body .status-viewer-header,
+html body .status-viewer-header *,
+html body .status-viewer-header p,
+html.light body .status-viewer-header,
+html.light body .status-viewer-header *,
+html.light body .status-viewer-header p,
+.light body .status-viewer-header,
+.light body .status-viewer-header *,
+.light body .status-viewer-header p,
+html body .wallpaper-card-title,
+html body .wallpaper-card-title *,
+html.light body .wallpaper-card-title,
+html.light body .wallpaper-card-title *,
+.light body .wallpaper-card-title,
+.light body .wallpaper-card-title * {
+  color: #ffffff !important;
+}
+
+/* Sent message bubble always white text in both light and dark mode */
+.sent-message-bubble,
+.sent-message-bubble *,
+html.light body .sent-message-bubble,
+html.light body .sent-message-bubble * {
+  color: #ffffff !important;
+}
+
+/* ── Modal Backdrop Blur: blur sidebar when any modal is open ── */
+/* The sidebar is the first flex child inside h-screen layout */
+body[data-modal-open="true"] .chat-sidebar-root,
+.sidebar-blur {
+  filter: blur(4px) brightness(0.6);
+  pointer-events: none;
+  user-select: none;
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+
+/* The chat panel itself stays interactive (modals render inside it) */
+body[data-modal-open="true"] .chat-panel-root {
+  /* intentionally not blurred; modals render above */
+}
+
+/* --- PRE-LOGIN & AUTH PAGES SYSTEM LIGHT THEME STYLING --- */
+.light .bg-\[\#121118\],
+.light .bg-\[\#0f0e15\] {
+  background-color: #f0f2f5 !important;
+  color: #111b21 !important;
+}
+
+.light .bg-\[\#23212b\],
+.light .bg-\[\#1f1d2c\] {
+  background-color: #ffffff !important;
+  color: #111b21 !important;
+  box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.08) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+.light .bg-\[\#1c1a29\],
+.light .bg-\[\#1a1826\] {
+  background-color: #f8f9fa !important;
+  color: #111b21 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Ensure left sliding panel text, logo icon, and title remain crisp white over dark image gradient in both Light & Dark modes */
+.auth-slide-panel,
+.auth-slide-panel *,
+.auth-slide-panel h2,
+.auth-slide-panel span,
+.light .auth-slide-panel,
+.light .auth-slide-panel *,
+.light .auth-slide-panel h2,
+.light .auth-slide-panel span {
+  color: #ffffff !important;
+}
+
+.auth-slide-panel p,
+.light .auth-slide-panel p {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.auth-slide-panel svg,
+.light .auth-slide-panel svg {
+  stroke: #ffffff !important;
+  color: #ffffff !important;
+}
+
+/* --- CHAT THEME LIGHT MODE OVERRIDES --- */
+.light .text-white\/50 {
+  color: #54656f !important;
+}
+
+.light .text-white\/90 {
+  color: #111b21 !important;
+}
+
+.light .text-white\/40 {
+  color: #667781 !important;
+}
+
+/* Sidebar and background blur when lightbox is active */
+html.lightbox-active .sidebar-container,
+html.lightbox-active .chat-sidebar,
+html.lightbox-active .chat-sidebar-container,
+html.lightbox-active [class*="sidebar"] {
+  filter: blur(8px) !important;
+  pointer-events: none !important;
+  transition: filter 0.3s ease !important;
+}
+
+/* --- Responsive: mobile & tablet (Tailwind breakpoints: sm 640px, md 768px, lg 1024px) --- */
+@layer components {
+  .chat-app-shell {
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
+  @supports not (height: 100dvh) {
+    .chat-app-shell {
+      height: 100vh;
+      max-height: 100vh;
+    }
+  }
+
+  .chat-sidebar-root,
+  .chat-panel-root {
+    min-height: 0;
+  }
+
+  /* Auth cards: avoid forced min-height on small phones */
+  @media (max-width: 767px) {
+    .auth-card-shell {
+      border-radius: 1rem;
+    }
+  }
+
+  /* Tablet: slightly tighter sidebar list typography */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .chat-sidebar-root .sidebar-container h2.text-xl {
+      font-size: 1.125rem;
+    }
+  }
+
+  /* Modals & overlays: use safe areas on notched devices */
+  .modal-safe-padding {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  @media (max-width: 639px) {
+
+    .fixed.inset-0.flex.items-center.justify-center.p-4,
+    .fixed.inset-0.flex.items-center.justify-center.p-5 {
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+      padding-bottom: max(1rem, env(safe-area-inset-bottom));
+      padding-top: max(1rem, env(safe-area-inset-top));
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    overscroll-behavior-y: none;
+  }
+
+  .chat-panel-root header {
+    padding-top: max(0.75rem, env(safe-area-inset-top));
+  }
+}
+
+/* Emoji zoom micro-animation */
+@keyframes emoji-zoom {
+  0% {
+    transform: scale(0.95);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(0.95);
+  }
+}
+
+.animate-emoji-zoom {
+  animation: emoji-zoom 2.5s infinite ease-in-out;
+  display: inline-block;
+}

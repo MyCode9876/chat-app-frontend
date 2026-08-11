@@ -34,6 +34,7 @@ import { getPrivacySettings, updatePrivacySettings, requestAccountInfo, sendFeed
 import { deleteNotificationsBatch } from "../services/notification";
 import StatusViewer from "./statusViewer";
 import { useTranslation } from "./i18n";
+import api from "../services/api";
 
 /* ─── Premium Custom Select (SS3 style dropdown) ─────────────────────────── */
 const CustomSelect = ({ value, onChange, options }) => {
@@ -5398,21 +5399,13 @@ export default function ChatSidebar({
                             if (!contactSubject.trim() || !contactMessage.trim()) return;
                             setContactSubmitting(true);
                             try {
-                              const token = localStorage.getItem("token");
-                              const response = await fetch("http://localhost:5000/api/profile/contact-us", {
-                                method: "POST",
-                                headers: {
-                                  "Content-Type": "application/json",
-                                  Authorization: `Bearer ${token}`
-                                },
-                                body: JSON.stringify({
-                                  name: contactName,
-                                  mobile: contactPhone,
-                                  subject: contactSubject,
-                                  message: contactMessage
-                                })
+                              const response = await api.post("/profile/contact-us", {
+                                name: contactName,
+                                mobile: contactPhone,
+                                subject: contactSubject,
+                                message: contactMessage
                               });
-                              const data = await response.json();
+                              const data = response.data;
                               if (data.success || response.status === 200 || response.status === 201) {
                                 setContactSuccess(true);
                                 setContactSubject("");

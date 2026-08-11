@@ -1,6 +1,10 @@
 import { io } from "socket.io-client";
 
 const getSocketUrl = () => {
+  const envApiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL;
+  if (envApiUrl) {
+    return envApiUrl.replace(/\/api\/?$/, "");
+  }
   if (typeof window !== "undefined") {
     const hostname = window.location.hostname;
     return `http://${hostname}:8000`;

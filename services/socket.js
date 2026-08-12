@@ -2,7 +2,7 @@ import { io } from "socket.io-client";
 import { normalizeUrls } from "./api";
 
 const getSocketUrl = () => {
-  const envApiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL;
+  const envApiUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   if (envApiUrl) {
     return envApiUrl.replace(/\/api\/?$/, "");
   }

@@ -1,4 +1,5 @@
 import { io } from "socket.io-client";
+import { normalizeUrls } from "./api";
 
 const getSocketUrl = () => {
   const envApiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || process.env.API_BASE_URL;
@@ -23,6 +24,16 @@ export const initiateSocketConnection = () => {
     withCredentials: true,
     transports: ["polling", "websocket"]
   });
+
+  // Wrap socket.on to automatically normalize any local backend URLs in socket events
+  const originalOn = socket.on;
+  socket.on = function (event, fn) {
+    const wrappedFn = function (...args) {
+      const normalizedArgs = args.map(arg => normalizeUrls(arg));
+      return fn.apply(this, normalizedArgs);
+    };
+    return originalOn.call(this, event, wrappedFn);
+  };
 
   console.log("Connecting to WebSocket server...");
 

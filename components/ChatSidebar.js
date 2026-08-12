@@ -2092,7 +2092,7 @@ export default function ChatSidebar({
                 >
                   <ArrowLeft className="w-5 h-5" />
                 </button>
-                <h2 className="text-lg font-bold text-white tracking-wide truncate flex-1">
+                <h2 className="text-lg font-bold text-white tracking-wide truncate flex-1 pl-2">
                   {activeTab === "chats"
                     ? (listsSubView === "new-list" ? t("new_list") : (listsSubView === "edit-list" ? t("edit_list") : t("chats")))
                     : activeTab === "community"
@@ -2195,7 +2195,7 @@ export default function ChatSidebar({
                   </div>
                 </div>
               ) : (
-                <h2 className="text-xl font-bold text-white tracking-wide truncate">
+                <h2 className="text-xl font-bold text-white tracking-wide truncate pl-2">
                   {activeTab === "chats"
                     ? (listsSubView === "new-list" ? t("new_list") : (listsSubView === "edit-list" ? t("edit_list") : t("app_name", "MYCHATBOX")))
                     : activeTab === "community"

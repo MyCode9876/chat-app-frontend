@@ -325,7 +325,7 @@ export default function LoginPage() {
           } else {
             router.push("/chat");
           }
-        }, 1200);
+        }, 200);
       } else {
         setGlobalError(response.data.message || "Failed to login.");
       }

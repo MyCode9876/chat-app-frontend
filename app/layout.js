@@ -3,6 +3,9 @@ import './globals.css'
 export const metadata = {
   title: 'MYCHATBOX — Secure Chat Space',
   description: 'Premium WhatsApp-style real-time purple dark chat client space.',
+  icons: {
+    icon: '/icon.svg',
+  },
 }
 
 export const viewport = {

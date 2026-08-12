@@ -248,7 +248,14 @@ export default function ChatPage({ initialTab = "chats", initialSettingsView = "
     }
     const loadInitialData = async () => {
       try {
-        const profileData = await getMyProfile();
+        const [profileData, chatsData, directoryData, contactsData, notificationsData] = await Promise.all([
+          getMyProfile(),
+          getMyChats(),
+          getAllUsersDirectory(),
+          getSavedContacts(),
+          getMyNotifications()
+        ]);
+
         if (profileData.success) {
           setCurrentUser(profileData.user);
           setEditFirstName(profileData.user.first_name || "");
@@ -258,29 +265,27 @@ export default function ChatPage({ initialTab = "chats", initialSettingsView = "
           setEditAbout(profileData.user.about || "Hey there! I am using MYCHATBOX.");
         }
 
-        const chatsData = await getMyChats();
         if (chatsData.success) {
           setChatList(chatsData.chats);
         }
 
-        const directoryData = await getAllUsersDirectory();
         if (directoryData.success) {
           setDirectoryUsers(directoryData.users);
         }
 
-        const contactsData = await getSavedContacts();
         if (contactsData.success) {
           setContacts(contactsData.contacts);
         }
 
-        const notificationsData = await getMyNotifications();
         if (notificationsData.success) {
           setNotifications(notificationsData.notifications);
         }
 
         const socketInstance = initiateSocketConnection();
         socketRef.current = socketInstance;
-        socketInstance.emit("join_user", profileData.user.id);
+        if (profileData.success && profileData.user) {
+          socketInstance.emit("join_user", profileData.user.id);
+        }
 
         socketInstance.off("receive_message");
         socketInstance.off("messages_seen");

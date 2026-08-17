@@ -350,17 +350,42 @@ export default function BlankScreen({ activeRoom, setActiveRoom, setActiveTab, c
   }, [isPollCreationOpen, isEventCreationOpen, activeRoom]);
 
 
+  const fetchGroupMembers = async (roomId = activeRoom?.id) => {
+    if (!roomId) return;
+    try {
+      const res = await getGroupMembers(roomId);
+      if (res) {
+        if (Array.isArray(res)) {
+          setGroupMembers(res);
+        } else if (res.members && Array.isArray(res.members)) {
+          setGroupMembers(res.members);
+        } else if (res.data && Array.isArray(res.data)) {
+          setGroupMembers(res.data);
+        }
+      }
+    } catch (err) {
+      console.error("Failed to load group members:", err);
+    }
+  };
+
   useEffect(() => {
     if (activeRoom && (activeRoom.is_group || activeRoom.is_community)) {
-      getGroupMembers(activeRoom.id)
-        .then((res) => {
-          if (res.success) setGroupMembers(res.members || []);
-        })
-        .catch((err) => console.error("Failed to load group members:", err));
+      fetchGroupMembers(activeRoom.id);
     } else {
       setGroupMembers([]);
     }
-  }, [activeRoom?.id]);
+
+    const handleRefreshMembers = () => {
+      if (activeRoom && (activeRoom.is_group || activeRoom.is_community)) {
+        fetchGroupMembers(activeRoom.id);
+      }
+    };
+
+    window.addEventListener("refreshGroupMembers", handleRefreshMembers);
+    return () => {
+      window.removeEventListener("refreshGroupMembers", handleRefreshMembers);
+    };
+  }, [activeRoom?.id, activeRoom?.members]);
 
   useEffect(() => {
     if (!activeRoom || !messages || messages.length === 0) return;
@@ -1330,12 +1355,7 @@ export default function BlankScreen({ activeRoom, setActiveRoom, setActiveTab, c
   const openGroupSettings = async (initialTab = "info") => {
     setEditGroupName(activeRoom.name || "");
     setGroupSettingsTab(initialTab);
-    try {
-      const res = await getGroupMembers(activeRoom.id);
-      if (res.success) setGroupMembers(res.members);
-    } catch (err) {
-      console.error("Failed to load group members:", err);
-    }
+    await fetchGroupMembers(activeRoom.id);
     setShowGroupSettings(true);
   };
 
@@ -1375,11 +1395,8 @@ export default function BlankScreen({ activeRoom, setActiveRoom, setActiveTab, c
   const handleAddMemberToGroup = async (userId) => {
     try {
       const res = await addMemberToGroup(activeRoom.id, userId);
-      if (res.success) {
-        const membersRes = await getGroupMembers(activeRoom.id);
-        if (membersRes.success) setGroupMembers(membersRes.members);
-        if (refreshChatList) refreshChatList();
-      }
+      await fetchGroupMembers(activeRoom.id);
+      if (refreshChatList) await refreshChatList();
     } catch (err) {
       console.error("Failed to add member:", err);
     }
@@ -1898,7 +1915,8 @@ export default function BlankScreen({ activeRoom, setActiveRoom, setActiveTab, c
                           {isTypingPartner ? (
                             <span className="text-[#9f85ff] font-semibold animate-pulse">{typingPartnerName} {t("blank_typing_indicator")}</span>
                           ) : activeRoom.is_group ? (
-                            activeRoom.members?.map((m) => m ? m.first_name : "").join(", ") + t("blank_group_members_list")
+                            ((groupMembers && groupMembers.length > 0) ? groupMembers : (activeRoom.members || []))
+                              ?.map((m) => m ? m.first_name : "").filter(Boolean).join(", ") + t("blank_group_members_list")
                           ) : !currentPartner ? (
                             t("blank_message_yourself")
                           ) : (
@@ -4034,8 +4052,8 @@ export default function BlankScreen({ activeRoom, setActiveRoom, setActiveTab, c
                                             if (res && res.success) {
                                               setStatusTip(t("approved_request_success", "Approved request successfully!"));
                                               await fetchCommunityRequests();
-                                              const membersRes = await getGroupMembers(activeRoom.id);
-                                              if (membersRes.success) setGroupMembers(membersRes.members);
+                                              await fetchGroupMembers(activeRoom.id);
+                                              if (refreshChatList) await refreshChatList();
                                             }
                                           } catch (err) {
                                             console.error(err);
@@ -4168,8 +4186,8 @@ export default function BlankScreen({ activeRoom, setActiveRoom, setActiveTab, c
                                               }
                                               setStatusTip("Member removed.");
                                               if (handleSendMessage) handleSendMessage(null, `🚪 ${member.first_name} left/was removed from the group.`);
-                                              const membersRes = await getGroupMembers(activeRoom.id);
-                                              if (membersRes.success) setGroupMembers(membersRes.members);
+                                              await fetchGroupMembers(activeRoom.id);
+                                              if (refreshChatList) await refreshChatList();
                                             } catch (err) {
                                               console.error(err);
                                               setStatusTip("Failed to remove member.");

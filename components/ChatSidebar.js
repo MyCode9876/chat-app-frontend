@@ -6805,7 +6805,10 @@ export default function ChatSidebar({
                       {(() => {
                         const filteredUpdates = (statusesData?.contactUpdates || []).filter(g => {
                           if (!statusSearch.trim()) return true;
-                          const name = `${g.user?.first_name || ""} ${g.user?.last_name || ""}`.toLowerCase();
+                          const savedContact = (contacts || []).find(c => Number(c.id) === Number(g.user?.id));
+                          const name = savedContact
+                            ? `${savedContact.first_name || ""} ${savedContact.last_name || ""}`.toLowerCase()
+                            : `${g.user?.first_name || ""} ${g.user?.last_name || ""}`.toLowerCase();
                           return name.includes(statusSearch.toLowerCase());
                         });
 
@@ -6826,7 +6829,10 @@ export default function ChatSidebar({
                               <div className="space-y-2">
                                 <div className="text-[10px] font-bold text-white/30 uppercase tracking-widest pl-1 mb-1">{t("status_recent_updates")}</div>
                                 {recentUpdates.map((group) => {
-                                  const userInitials = `${group.user?.first_name?.[0] || ""}${group.user?.last_name?.[0] || ""}`.toUpperCase();
+                                  const savedContact = (contacts || []).find(c => Number(c.id) === Number(group.user?.id));
+                                  const first = savedContact ? savedContact.first_name : group.user?.first_name;
+                                  const last = savedContact ? savedContact.last_name : group.user?.last_name;
+                                  const userInitials = `${first?.[0] || ""}${last?.[0] || ""}`.toUpperCase();
                                   const latestStatus = group.statuses?.[0] || {};
                                   return (
                                     <div
@@ -6851,7 +6857,9 @@ export default function ChatSidebar({
                                       </div>
 
                                       <div className="min-w-0 flex-1">
-                                        <h4 className="text-xs font-bold text-white">{group.user?.first_name} {group.user?.last_name}</h4>
+                                        <h4 className="text-xs font-bold text-white">
+                                          {savedContact ? `${savedContact.first_name || ""} ${savedContact.last_name || ""}`.trim() : `${group.user?.first_name || ""} ${group.user?.last_name || ""}`.trim()}
+                                        </h4>
                                         <p className="text-[10px] text-white/40 mt-0.5">
                                           {latestStatus.created_at ? new Date(latestStatus.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ""}
                                         </p>
@@ -6866,7 +6874,10 @@ export default function ChatSidebar({
                               <div className="space-y-2 pt-2">
                                 <div className="text-[10px] font-bold text-white/30 uppercase tracking-widest pl-1 mb-1">{t("status_viewed_updates")}</div>
                                 {viewedUpdates.map((group) => {
-                                  const userInitials = `${group.user?.first_name?.[0] || ""}${group.user?.last_name?.[0] || ""}`.toUpperCase();
+                                  const savedContact = (contacts || []).find(c => Number(c.id) === Number(group.user?.id));
+                                  const first = savedContact ? savedContact.first_name : group.user?.first_name;
+                                  const last = savedContact ? savedContact.last_name : group.user?.last_name;
+                                  const userInitials = `${first?.[0] || ""}${last?.[0] || ""}`.toUpperCase();
                                   const latestStatus = group.statuses?.[0] || {};
                                   return (
                                     <div
@@ -6891,7 +6902,9 @@ export default function ChatSidebar({
                                       </div>
 
                                       <div className="min-w-0 flex-1">
-                                        <h4 className="text-xs font-bold text-white/80">{group.user?.first_name} {group.user?.last_name}</h4>
+                                        <h4 className="text-xs font-bold text-white/80">
+                                          {savedContact ? `${savedContact.first_name || ""} ${savedContact.last_name || ""}`.trim() : `${group.user?.first_name || ""} ${group.user?.last_name || ""}`.trim()}
+                                        </h4>
                                         <p className="text-[10px] text-white/35 mt-0.5">
                                           {latestStatus.created_at ? new Date(latestStatus.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : ""}
                                         </p>
@@ -7034,6 +7047,7 @@ export default function ChatSidebar({
             statusGroup={activeStatusGroup}
             currentUser={currentUser}
             themeColor={chatThemeColor || "#7c5dfa"}
+            contacts={contacts}
             onClose={() => {
               setActiveStatusGroup(null);
               loadStatuses();

@@ -11,6 +11,7 @@ export default function StatusViewer({
   statusGroup,
   currentUser,
   themeColor,
+  contacts = [],
   onClose,
   onStatusDeleted,
 }) {
@@ -66,7 +67,7 @@ export default function StatusViewer({
         try {
           const parsed = JSON.parse(activeStatus.content);
           cleanUrl = parsed.url || "";
-        } catch (e) {}
+        } catch (e) { }
       }
     }
     return `\u200Bstatus_reply:${activeStatus.type || "image"}:${encodeURIComponent(cleanUrl)}\u200B`;
@@ -356,13 +357,22 @@ export default function StatusViewer({
           <div className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-xs shrink-0 overflow-hidden ${isLightMode ? "bg-gray-200 border-2 border-black/10" : "bg-[#27243c] border-2 border-white/20"}`}>
             {statusGroup.user.profile_image ? (
               <img src={statusGroup.user.profile_image} alt="" className="w-full h-full object-cover" />
-            ) : (
-              `${statusGroup.user.first_name?.[0] || ""}${statusGroup.user.last_name?.[0] || ""}`.toUpperCase()
-            )}
+            ) : (() => {
+              const savedContact = (contacts || []).find(c => Number(c.id) === Number(statusGroup.user.id));
+              const first = savedContact ? savedContact.first_name : statusGroup.user.first_name;
+              const last = savedContact ? savedContact.last_name : statusGroup.user.last_name;
+              return `${first?.[0] || ""}${last?.[0] || ""}`.toUpperCase();
+            })()}
           </div>
           <div>
             <p className="text-xs font-bold leading-none" style={{ color: isLightMode ? '#000000' : '#ffffff' }}>
-              {isOwnStatus ? t("status_my_status") : `${statusGroup.user.first_name} ${statusGroup.user.last_name}`}
+              {isOwnStatus ? t("status_my_status") : (() => {
+                const savedContact = (contacts || []).find(c => Number(c.id) === Number(statusGroup.user.id));
+                if (savedContact) {
+                  return `${savedContact.first_name || ""} ${savedContact.last_name || ""}`.trim();
+                }
+                return `${statusGroup.user.first_name || ""} ${statusGroup.user.last_name || ""}`.trim();
+              })()}
             </p>
             {activeStatus && (
               <p className={`text-[10px] mt-0.5 ${isLightMode ? "text-black/50" : "text-white/60"}`}>{formattedTime(activeStatus.created_at)}</p>
@@ -458,11 +468,10 @@ export default function StatusViewer({
             value={replyText}
             onChange={(e) => setReplyText(e.target.value)}
             placeholder={t("reply_label", "Reply")}
-            className={`flex-1 text-xs rounded-full py-2.5 px-4 focus:outline-none transition-all font-medium backdrop-blur-md ${
-              isLightMode
-                ? "bg-black/5 hover:bg-black/10 text-black placeholder-black/50"
-                : "bg-white/15 hover:bg-white/20 text-white placeholder-white/50"
-            }`}
+            className={`flex-1 text-xs rounded-full py-2.5 px-4 focus:outline-none transition-all font-medium backdrop-blur-md ${isLightMode
+              ? "bg-black/5 hover:bg-black/10 text-black placeholder-black/50"
+              : "bg-white/15 hover:bg-white/20 text-white placeholder-white/50"
+              }`}
             style={{
               border: "none",
               outline: "none"
@@ -477,11 +486,10 @@ export default function StatusViewer({
           <button
             type="button"
             onClick={handleSendReply}
-            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer border-none shrink-0 ${
-              isLightMode
-                ? "bg-black/5 hover:bg-black/10 text-black/70 hover:text-black"
-                : "bg-white/15 hover:bg-white/20 text-white/80 hover:text-white"
-            }`}
+            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer border-none shrink-0 ${isLightMode
+              ? "bg-black/5 hover:bg-black/10 text-black/70 hover:text-black"
+              : "bg-white/15 hover:bg-white/20 text-white/80 hover:text-white"
+              }`}
             title="Send"
           >
             <Send className="w-4 h-4" />
@@ -490,11 +498,10 @@ export default function StatusViewer({
           <button
             type="button"
             onClick={() => setShowEmojiReactions(true)}
-            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer border-none ${
-              isLightMode
-                ? "bg-black/5 hover:bg-black/10 text-black/70 hover:text-black"
-                : "bg-white/15 hover:bg-white/20 text-white/80 hover:text-white"
-            }`}
+            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer border-none ${isLightMode
+              ? "bg-black/5 hover:bg-black/10 text-black/70 hover:text-black"
+              : "bg-white/15 hover:bg-white/20 text-white/80 hover:text-white"
+              }`}
             title="Quick Reactions"
           >
             <Smile className="w-4 h-4" />
@@ -515,11 +522,10 @@ export default function StatusViewer({
                 console.error("Failed to toggle like status:", err);
               }
             }}
-            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer border-none ${
-              isLightMode
-                ? "bg-black/5 hover:bg-black/10 text-black/70 hover:text-black"
-                : "bg-white/15 hover:bg-white/20 text-white/80 hover:text-white"
-            }`}
+            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all cursor-pointer border-none ${isLightMode
+              ? "bg-black/5 hover:bg-black/10 text-black/70 hover:text-black"
+              : "bg-white/15 hover:bg-white/20 text-white/80 hover:text-white"
+              }`}
             title="Like status"
           >
             <Heart
@@ -539,11 +545,10 @@ export default function StatusViewer({
           onClick={() => setShowEmojiReactions(false)}
         >
           <div
-            className={`border rounded-[28px] p-5 flex flex-col items-center gap-3.5 shadow-2xl animate-scale-up w-full max-w-[280px] ${
-              isLightMode
-                ? "bg-white/95 border-gray-200/80 text-gray-900"
-                : "bg-[#1f1d2c]/95 border-white/15 text-white"
-            }`}
+            className={`border rounded-[28px] p-5 flex flex-col items-center gap-3.5 shadow-2xl animate-scale-up w-full max-w-[280px] ${isLightMode
+              ? "bg-white/95 border-gray-200/80 text-gray-900"
+              : "bg-[#1f1d2c]/95 border-white/15 text-white"
+              }`}
             style={{
               backdropFilter: "blur(12px)",
               WebkitBackdropFilter: "blur(12px)"
@@ -551,9 +556,8 @@ export default function StatusViewer({
             onClick={(e) => e.stopPropagation()}
           >
             <span
-              className={`text-[10px] font-bold uppercase tracking-widest pl-0.5 ${
-                isLightMode ? "text-gray-400" : "text-white/40"
-              }`}
+              className={`text-[10px] font-bold uppercase tracking-widest pl-0.5 ${isLightMode ? "text-gray-400" : "text-white/40"
+                }`}
             >
               {t("status_viewer_tap_to_send", "Tap to send")}
             </span>
@@ -639,7 +643,12 @@ export default function StatusViewer({
                 <div className={`text-center py-12 text-xs ${isLightMode ? "text-gray-400" : "text-white/40"}`}>{t("status_viewer_no_views")}</div>
               ) : (
                 viewers.map((viewer) => {
-                  const initials = `${viewer.first_name?.[0] || ""}${viewer.last_name?.[0] || ""}`.toUpperCase();
+                  const initials = (() => {
+                    const savedContact = (contacts || []).find(c => Number(c.id) === Number(viewer.id));
+                    const first = savedContact ? savedContact.first_name : viewer.first_name;
+                    const last = savedContact ? savedContact.last_name : viewer.last_name;
+                    return `${first?.[0] || ""}${last?.[0] || ""}`.toUpperCase();
+                  })();
                   return (
                     <div key={viewer.id} className="py-3 flex items-center justify-between">
                       <div className="flex items-center gap-3">
@@ -654,7 +663,13 @@ export default function StatusViewer({
                         <div>
                           <p className={`text-xs font-semibold flex items-center gap-1.5 animate-fade-in ${isLightMode ? "text-gray-900" : "text-white"
                             }`}>
-                            {viewer.first_name} {viewer.last_name}
+                            {(() => {
+                              const savedContact = (contacts || []).find(c => Number(c.id) === Number(viewer.id));
+                              if (savedContact) {
+                                return `${savedContact.first_name || ""} ${savedContact.last_name || ""}`.trim();
+                              }
+                              return `${viewer.first_name || ""} ${viewer.last_name || ""}`.trim();
+                            })()}
                             {viewer.is_liked && <span className="text-[10px]" title="Liked">💜</span>}
                           </p>
                           <p className={`text-[10px] mt-0.5 ${isLightMode ? "text-gray-500" : "text-white/40"}`}>{formattedTime(viewer.viewed_at)}</p>

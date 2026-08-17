@@ -558,6 +558,11 @@ export default function ChatPage({ initialTab = "chats", initialSettingsView = "
         (chatsData.chats || []).forEach((room) => {
           if (room && room.id) joinChatRoomSocket(room.id);
         });
+        setActiveRoom((prevActiveRoom) => {
+          if (!prevActiveRoom) return prevActiveRoom;
+          const updated = (chatsData.chats || []).find((c) => Number(c.id) === Number(prevActiveRoom.id));
+          return updated ? { ...prevActiveRoom, ...updated } : prevActiveRoom;
+        });
       }
     } catch (err) {
       console.error("Failed to refresh chats:", err);
@@ -1493,8 +1498,11 @@ export default function ChatPage({ initialTab = "chats", initialSettingsView = "
                           }
                           setIsGroupModalOpen(false);
                           setSelectedGroupMembers([]);
-                          refreshMessages();
-                          refreshChatList();
+                          if (refreshChatList) await refreshChatList();
+                          if (refreshMessages) await refreshMessages();
+                          if (typeof window !== "undefined") {
+                            window.dispatchEvent(new CustomEvent("refreshGroupMembers"));
+                          }
                         } catch (err) {
                           console.error("Failed to add members:", err);
                         }
